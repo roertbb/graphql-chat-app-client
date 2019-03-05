@@ -16,7 +16,9 @@ const theme = {
     xl: '48px',
     xxl: '64px'
   },
-  borderRadius: '8px'
+  borderRadius: '8px',
+  sidebarWidth: '250px',
+  messageInputHeight: '80px'
 };
 
 export default theme;
