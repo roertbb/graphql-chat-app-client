@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import MessageActionButton from '../components/ActionButton';
 
 const MessageContainer = styled.div`
   width: 60%;
@@ -20,11 +21,6 @@ const MessageInfoContainer = styled.div`
 
 const MessageAuthor = styled.span`
   font-weight: bold;
-`;
-
-const MessageActionButton = styled.button`
-  border: 0;
-  background-color: inherit;
 `;
 
 const Message = props => {
