@@ -42,12 +42,18 @@ const ChatInput = ({ location }) => {
         const { chattedWith } = cache.readQuery({
           query: GET_CHATTED_WITH
         });
-        cache.writeQuery({
-          query: GET_CHATTED_WITH,
-          data: {
-            chattedWith: chattedWith.concat([createPrivateMessage.receiver])
-          }
-        });
+
+        if (
+          !chattedWith
+            .map(user => user.id)
+            .includes(createPrivateMessage.receiver.id)
+        )
+          cache.writeQuery({
+            query: GET_CHATTED_WITH,
+            data: {
+              chattedWith: chattedWith.concat([createPrivateMessage.receiver])
+            }
+          });
       }
     });
     setMessage('');

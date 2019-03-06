@@ -14,9 +14,4 @@ export const ModalContent = styled.div`
   max-width: 500px;
   padding: ${({ theme }) => theme.spacing.m};
   background-color: ${({ theme }) => theme.colors.white};
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
 `;

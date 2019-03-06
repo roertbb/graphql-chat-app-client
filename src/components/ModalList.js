@@ -10,6 +10,11 @@ const ModalList = styled.ul`
     padding: ${({ theme }) => theme.spacing.s};
     border-top: 1px solid ${({ theme }) => theme.colors.background};
   }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 export default ModalList;

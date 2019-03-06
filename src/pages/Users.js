@@ -7,7 +7,7 @@ import ModalList from '../components/ModalList';
 import { GET_USERS } from '../graphql/User';
 import { useQuery } from 'react-apollo-hooks';
 
-const Users = ({ location }) => {
+const Users = props => {
   const { data, error, loading, refetch } = useQuery(GET_USERS);
 
   useEffect(() => {
