@@ -1,33 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Modal, ModalContent } from '../components/Modal';
 import Title from '../components/Title';
+import ModalList from '../components/ModalList';
+import { GET_USERS } from '../graphql/User';
+import { useQuery } from 'react-apollo-hooks';
 
-import styled from 'styled-components';
+const Users = ({ location }) => {
+  const { data, error, loading, refetch } = useQuery(GET_USERS);
 
-const ModalList = styled.ul`
-  list-style: none;
-  text-align: center;
-  padding: 0;
+  useEffect(() => {
+    refetch();
+  }, []);
 
-  li {
-    cursor: pointer;
-    padding: ${({ theme }) => theme.spacing.s};
-    border-top: 1px solid ${({ theme }) => theme.colors.background};
+  let content = null;
+  if (error) content = <p>{error.message}</p>;
+  else if (loading) content = <p>Loading...</p>;
+  else {
+    content = data.users.map(({ nick, id }) => (
+      <li key={id}>
+        <Link to={`/${id}`}>{nick}</Link>
+      </li>
+    ));
   }
-`;
 
-const Users = props => {
   return (
     <Modal>
       <ModalContent>
         <Title>Choose User</Title>
-        <ModalList>
-          <li>lorem</li>
-          <li>ipsum</li>
-        </ModalList>
+        <ModalList>{content}</ModalList>
       </ModalContent>
     </Modal>
   );
 };
 
-export default Users;
+export default withRouter(Users);

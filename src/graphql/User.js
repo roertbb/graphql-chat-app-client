@@ -8,3 +8,12 @@ export const GET_CHATTED_WITH = gql`
     }
   }
 `;
+
+export const GET_USERS = gql`
+  query {
+    users {
+      id
+      nick
+    }
+  }
+`;

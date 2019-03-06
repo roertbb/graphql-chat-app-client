@@ -5,6 +5,7 @@ import Button from '../../components/Button';
 import { SEND_MESSAGE, GET_MESSAGES } from '../../graphql/PrivateMessage';
 import { getUserId } from '../../utils/getUserId';
 import { ChatInputContainer, Input } from '../../components/ChatInput';
+import { GET_CHATTED_WITH } from '../../graphql/User';
 
 const ChatInput = ({ location }) => {
   const sendMessage = useMutation(SEND_MESSAGE);
@@ -35,6 +36,16 @@ const ChatInput = ({ location }) => {
           variables: { userId: getUserId(location) },
           data: {
             myPrivateMessages: myPrivateMessages.concat([createPrivateMessage])
+          }
+        });
+
+        const { chattedWith } = cache.readQuery({
+          query: GET_CHATTED_WITH
+        });
+        cache.writeQuery({
+          query: GET_CHATTED_WITH,
+          data: {
+            chattedWith: chattedWith.concat([createPrivateMessage.receiver])
           }
         });
       }
