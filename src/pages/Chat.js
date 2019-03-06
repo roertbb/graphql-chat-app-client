@@ -1,21 +1,31 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar';
+import { withRouter } from 'react-router';
+import { SidebarContainer, TitleContainer } from '../components/Sidebar';
 import { ChatContainer } from '../components/ChatContainer';
 import Container from '../components/Container';
-import ChatInput from '../components/ChatInput';
-import Message from '../components/Message';
+import ChatInput from './Chat/ChatInput';
+import MessageActionButton from '../components/ActionButton';
+import ChattedWith from './Chat/ChattedWith';
+import Messages from './Chat/Messages';
 
-const Chat = props => {
+const Chat = ({ history, location }) => {
   return (
     <Container>
-      <Sidebar />
+      <SidebarContainer>
+        <TitleContainer>
+          <h3>Direct Messages</h3>
+          <MessageActionButton onClick={() => history.push('/users')}>
+            add
+          </MessageActionButton>
+        </TitleContainer>
+        <ChattedWith />
+      </SidebarContainer>
       <ChatContainer>
-        <Message />
-        <Message />
+        <Messages />
       </ChatContainer>
       <ChatInput />
     </Container>
   );
 };
 
-export default Chat;
+export default withRouter(Chat);

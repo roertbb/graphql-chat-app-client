@@ -1,7 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import MessageActionButton from '../components/ActionButton';
-import { withRouter } from 'react-router';
 
 export const SidebarContainer = styled.div`
   background: ${({ theme }) => theme.colors.gray};
@@ -16,32 +13,21 @@ export const SidebarContainer = styled.div`
     margin: 0;
   }
 
+  a {
+    color: ${({ theme }) => theme.colors.white};
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   h3 {
     margin-top: 0;
   }
 `;
 
-const TitleContainer = styled.div`
+export const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 `;
-
-const Sidebar = ({ history }) => {
-  return (
-    <SidebarContainer>
-      <TitleContainer>
-        <h3>Direct Messages</h3>
-        <MessageActionButton onClick={() => history.push('/users')}>
-          add
-        </MessageActionButton>
-      </TitleContainer>
-      <ul>
-        <li>lorem</li>
-        <li>ipsum</li>
-      </ul>
-    </SidebarContainer>
-  );
-};
-
-export default withRouter(Sidebar);

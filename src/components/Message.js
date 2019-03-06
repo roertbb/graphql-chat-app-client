@@ -1,14 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import MessageActionButton from '../components/ActionButton';
+import { getUserId } from '../utils/getUserId';
+import { withRouter } from 'react-router';
 
 const MessageContainer = styled.div`
   width: 60%;
-  align-self: flex-end;
+  ${({ sender }) =>
+    sender
+      ? css`
+          align-self: flex-start;
+        `
+      : css`
+          align-self: flex-end;
+        `};
 `;
 
 const MessageBox = styled.div`
-  background-color: ${({ theme }) => theme.colors.green};
+  background-color: ${({ theme, sender }) =>
+    sender === null ? theme.colors.green : theme.colors.white};
   padding: ${({ theme }) => theme.spacing.s};
   border-radius: ${({ theme }) => theme.borderRadius};
 `;
@@ -23,28 +33,30 @@ const MessageAuthor = styled.span`
   font-weight: bold;
 `;
 
-const Message = props => {
+const Message = ({ message, location }) => {
+  const { text, created_at, receiver, sender } = message;
+
+  const userId = getUserId(location);
+  const parseSender = () => {
+    if (Number(sender.id) === userId) return receiver.nick;
+    if (Number(receiver.id) === userId) return null;
+  };
+  const nick = parseSender();
+
   return (
-    <MessageContainer>
+    <MessageContainer sender={nick}>
       <MessageInfoContainer>
         <span>
-          <MessageAuthor>Lorem Ipsum</MessageAuthor> - 00:00
+          <MessageAuthor>{!nick ? 'You' : nick}</MessageAuthor> - {created_at}
         </span>
         <span>
           <MessageActionButton>edit</MessageActionButton>
           <MessageActionButton>delete</MessageActionButton>
         </span>
       </MessageInfoContainer>
-      <MessageBox>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sint
-        officia iure quidem mollitia aliquid odio laudantium debitis distinctio
-        quos et, doloribus, quod vero suscipit repellat modi beatae odit soluta
-        dolorem nulla vitae, quaerat animi fuga. Tempore repudiandae alias
-        dolore! Porro saepe ab totam eligendi eveniet cumque, nostrum quidem!
-        Recusandae!
-      </MessageBox>
+      <MessageBox sender={nick}>{text}</MessageBox>
     </MessageContainer>
   );
 };
 
-export default Message;
+export default withRouter(Message);
