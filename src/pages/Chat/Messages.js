@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useQuery, useSubscription } from 'react-apollo-hooks';
 import Message from '../../components/Message';
@@ -10,9 +10,13 @@ import { getUserId } from '../../utils/getUserId';
 
 const Messages = ({ location }) => {
   const userId = getUserId(location);
-  const { data, error, loading } = useQuery(GET_MESSAGES, {
+  const { data, error, loading, refetch } = useQuery(GET_MESSAGES, {
     variables: { userId }
   });
+
+  useEffect(() => {
+    refetch();
+  }, [location.pathname]);
 
   useSubscription(NEW_MESSAGE_SUBSCRIPTION, {
     variables: { senderId: getUserId(location) },

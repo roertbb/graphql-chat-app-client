@@ -3,6 +3,9 @@ import styled, { css } from 'styled-components';
 import MessageActionButton from '../components/ActionButton';
 import { getUserId } from '../utils/getUserId';
 import { withRouter } from 'react-router';
+import { ReactComponent as EditIcon } from '../assets/edit-regular.svg';
+import { ReactComponent as DeleteIcon } from '../assets/trash-alt-regular.svg';
+import { IconContainer } from '../components/IconContainer';
 
 const MessageContainer = styled.div`
   width: 60%;
@@ -38,20 +41,39 @@ const Message = ({ message, location }) => {
 
   const userId = getUserId(location);
   const parseSender = () => {
+    if (sender.id === receiver.id) return null;
     if (Number(sender.id) === userId) return receiver.nick;
     if (Number(receiver.id) === userId) return null;
   };
   const nick = parseSender();
 
+  const getTime = dateStr => {
+    const date = new Date(dateStr);
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    return `${hour}:${minutes}:${seconds}`;
+  };
+
   return (
     <MessageContainer sender={nick}>
       <MessageInfoContainer>
         <span>
-          <MessageAuthor>{!nick ? 'You' : nick}</MessageAuthor> - {created_at}
+          <MessageAuthor>{!nick ? 'You' : nick}</MessageAuthor> -{' '}
+          {getTime(created_at)}
         </span>
         <span>
-          <MessageActionButton>edit</MessageActionButton>
-          <MessageActionButton>delete</MessageActionButton>
+          <MessageActionButton>
+            <IconContainer>
+              <EditIcon />
+            </IconContainer>
+          </MessageActionButton>
+          <MessageActionButton>
+            <IconContainer>
+              <DeleteIcon />
+            </IconContainer>
+          </MessageActionButton>
         </span>
       </MessageInfoContainer>
       <MessageBox sender={nick}>{text}</MessageBox>

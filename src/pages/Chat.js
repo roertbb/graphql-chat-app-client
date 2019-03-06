@@ -7,15 +7,22 @@ import ChatInput from './Chat/ChatInput';
 import MessageActionButton from '../components/ActionButton';
 import ChattedWith from './Chat/ChattedWith';
 import Messages from './Chat/Messages';
+import { ReactComponent as AddIcon } from '../assets/plus-solid.svg';
+import { IconContainer } from '../components/IconContainer';
 
 const Chat = ({ history, location }) => {
+  const token = localStorage.getItem('token');
+  if (!token) history.push('/register');
+
   return (
     <Container>
       <SidebarContainer>
         <TitleContainer>
           <h3>Direct Messages</h3>
           <MessageActionButton onClick={() => history.push('/users')}>
-            add
+            <IconContainer white>
+              <AddIcon />
+            </IconContainer>
           </MessageActionButton>
         </TitleContainer>
         <ChattedWith />

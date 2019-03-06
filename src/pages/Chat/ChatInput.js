@@ -23,6 +23,9 @@ const ChatInput = ({ location }) => {
         receiverId: getUserId(location)
       },
       update: (cache, { data: { createPrivateMessage } }) => {
+        if (createPrivateMessage.sender.id === createPrivateMessage.receiver.id)
+          return;
+
         const { myPrivateMessages } = cache.readQuery({
           query: GET_MESSAGES,
           variables: { userId: getUserId(location) }
