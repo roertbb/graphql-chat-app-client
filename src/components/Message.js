@@ -1,11 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import MessageActionButton from '../components/ActionButton';
 import { getUserId } from '../utils/getUserId';
 import { withRouter } from 'react-router';
-import { ReactComponent as EditIcon } from '../assets/edit-regular.svg';
-import { ReactComponent as DeleteIcon } from '../assets/trash-alt-regular.svg';
-import { IconContainer } from '../components/IconContainer';
+// import MessageActionButton from '../components/ActionButton';
+// import { ReactComponent as EditIcon } from '../assets/edit-regular.svg';
+// import { ReactComponent as DeleteIcon } from '../assets/trash-alt-regular.svg';
+// import { IconContainer } from '../components/IconContainer';
 
 const MessageContainer = styled.div`
   width: 60%;
@@ -64,7 +64,7 @@ const Message = ({ message, location }) => {
           {getTime(created_at)}
         </span>
         <span>
-          <MessageActionButton>
+          {/* <MessageActionButton>
             <IconContainer>
               <EditIcon />
             </IconContainer>
@@ -73,7 +73,7 @@ const Message = ({ message, location }) => {
             <IconContainer>
               <DeleteIcon />
             </IconContainer>
-          </MessageActionButton>
+          </MessageActionButton> */}
         </span>
       </MessageInfoContainer>
       <MessageBox sender={nick}>{text}</MessageBox>

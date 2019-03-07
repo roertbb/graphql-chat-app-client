@@ -11,6 +11,7 @@ import FormInput from '../components/FormInput';
 import CustomLink from '../components/CustomLink';
 import Title from '../components/Title';
 import Typography from '../components/Typography';
+import { wsLink } from '../index';
 
 const Register = ({ history }) => {
   const register = useMutation(REGISTER_MUTATION);
@@ -23,6 +24,7 @@ const Register = ({ history }) => {
       const { token, refreshToken } = response.data.register;
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
+      wsLink.subscriptionClient.tryReconnect();
       history.push('/');
     } catch (error) {
       return {
