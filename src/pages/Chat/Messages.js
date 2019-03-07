@@ -14,17 +14,14 @@ const Messages = ({ location }) => {
     variables: { userId }
   });
 
-  useEffect(() => {
-    refetch();
-  }, [location.pathname]);
-
   useSubscription(NEW_MESSAGE_SUBSCRIPTION, {
-    variables: { senderId: getUserId(location) },
+    variables: { senderId: userId },
     onSubscriptionData: async ({ client, subscriptionData }) => {
       const { myPrivateMessages } = client.readQuery({
         query: GET_MESSAGES,
         variables: { userId: getUserId(location) }
       });
+
       client.writeQuery({
         query: GET_MESSAGES,
         variables: { userId: getUserId(location) },
@@ -36,6 +33,10 @@ const Messages = ({ location }) => {
       });
     }
   });
+
+  useEffect(() => {
+    refetch();
+  }, [location.pathname]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;

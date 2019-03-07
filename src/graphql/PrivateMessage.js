@@ -53,3 +53,18 @@ export const NEW_MESSAGE_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const NEW_DIRECT_MESSAGE_SUBSCRIPTION = gql`
+  subscription newMessageReceived {
+    newDirectMessage {
+      id
+      sender {
+        id
+        nick
+      }
+      receiver {
+        id
+      }
+    }
+  }
+`;
