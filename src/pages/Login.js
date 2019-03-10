@@ -4,7 +4,6 @@ import { Form, Field } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
 import { useMutation } from 'react-apollo-hooks';
 import { LOGIN_MUTATION } from '../graphql/Auth';
-import { wsLink } from '../index';
 
 import { Modal, ModalContent } from '../components/Modal';
 import Button from '../components/Button';
@@ -22,7 +21,6 @@ const Login = ({ history }) => {
       const { token, refreshToken } = response.data.login;
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
-      wsLink.subscriptionClient.tryReconnect();
       history.push('/');
     } catch (error) {
       return {

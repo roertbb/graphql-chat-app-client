@@ -42,7 +42,7 @@ const Message = ({ message, location }) => {
   const userId = getUserId(location);
   const parseSender = () => {
     if (sender.id === receiver.id) return null;
-    if (Number(sender.id) === userId) return receiver.nick;
+    if (Number(sender.id) === userId) return sender.nick;
     if (Number(receiver.id) === userId) return null;
   };
   const nick = parseSender();

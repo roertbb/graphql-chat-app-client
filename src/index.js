@@ -26,7 +26,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      'x-token': token ? `Bearer ${token}` : '',
+      'x-token': token ? token : '',
       'x-refreshToken': refreshToken ? refreshToken : ''
     }
   };
@@ -37,10 +37,10 @@ export const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     lazy: true,
-    connectionParams: {
+    connectionParams: () => ({
       'x-token': localStorage.getItem('token'),
       'x-refreshToken': localStorage.getItem('refreshToken')
-    }
+    })
   }
 });
 
